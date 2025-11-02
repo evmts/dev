@@ -1,9 +1,0 @@
-
-[workspace]
-resolver = '2'
-members = [
-	'libs/compiler',
-]
-
-[profile.release]
-lto = true
