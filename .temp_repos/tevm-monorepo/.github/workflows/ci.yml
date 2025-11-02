@@ -1,0 +1,99 @@
+name: CI Checks
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+env:
+  TEVM_TEST_ALCHEMY_KEY: ${{ secrets.TEVM_TEST_ALCHEMY_KEY }}
+  TEVM_RPC_URLS_MAINNET: ${{ secrets.TEVM_RPC_URLS_MAINNET }}
+  TEVM_RPC_URLS_OPTIMISM: ${{ secrets.TEVM_RPC_URLS_OPTIMISM }}
+
+jobs:
+  ci-checks:
+    name: CI Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout [Pull Request]
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - uses: actions/checkout@v4
+        name: Checkout [Default Branch]
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          fetch-depth: 0
+
+      - name: "Setup"
+        id: setup
+        uses: ./.github/actions/setup
+
+      - name: Build dist
+        id: build-dist
+        run: pnpm build:dist
+
+      - name: Build types
+        id: build-types
+        if: success()
+        run: pnpm build:types
+
+      - name: Tests
+        id: tests
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm test:coverage
+
+      - name: Fixtures
+        id: fixtures
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm -r dev:run
+
+      - name: Tests Rust
+        id: tests-rust
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm -r test:rust
+
+      - name: Typecheck
+        id: typecheck
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm -r typecheck
+
+      - name: Lint
+        id: lint
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm lint:check
+
+      - name: Lint deps
+        id: lint-deps
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm lint:deps
+
+      - name: Lint packages
+        id: lint-packages
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm lint:package
+
+      - name: Build app
+        id: build-app
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm build:app
+
+      - name: Generate docs
+        id: generate-docs
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm generate:docs
+
+      - name: Build rust
+        id: build-rust
+        if: always() && steps.setup.conclusion == 'success' && steps.build-dist.conclusion == 'success'
+        run: pnpm build:rust:app
+
+      - name: Validate Cargo workspace
+        id: validate-cargo
+        if: success()
+        run: cargo check --workspace --quiet
+        working-directory: .

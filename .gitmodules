@@ -1,0 +1,30 @@
+[submodule "chains"]
+	path = chains
+	url = https://github.com/evmts/chains.git
+[submodule "chop"]
+	path = chop
+	url = https://github.com/evmts/chop
+[submodule "compiler"]
+	path = compiler
+	url = https://github.com/evmts/compiler.git
+[submodule "guillotine"]
+	path = guillotine
+	url = https://github.com/evmts/guillotine.git
+[submodule "guillotine-mini"]
+	path = guillotine-mini
+	url = https://github.com/evmts/guillotine-mini
+[submodule "guillotine-rs"]
+	path = guillotine-rs
+	url = https://github.com/evmts/guillotine-rs.git
+[submodule "json-rpc"]
+	path = json-rpc
+	url = https://github.com/evmts/json-rpc.git
+[submodule "tevm-monorepo"]
+	path = tevm-monorepo
+	url = https://github.com/evmts/tevm-monorepo.git
+[submodule "voltaire"]
+	path = voltaire
+	url = https://github.com/evmts/voltaire.git
+[submodule "z-ens-normalize"]
+	path = z-ens-normalize
+	url = https://github.com/evmts/z-ens-normalize.git

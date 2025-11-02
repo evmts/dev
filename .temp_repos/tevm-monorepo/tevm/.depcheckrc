@@ -1,0 +1,10 @@
+ignores: [
+  "@tevm/bundler-cache",
+  "commander",
+  "effect",
+  "@tevm/ts-plugin",
+  "@tevm/cli",
+  "glob",
+  "solc"
+]
+skip-missing: true

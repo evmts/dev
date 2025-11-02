@@ -1,0 +1,4 @@
+---
+---
+
+Added BytesFixed solidity type

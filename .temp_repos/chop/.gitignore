@@ -1,0 +1,26 @@
+# Zig
+zig-out/
+zig-cache/
+.zig-cache/
+
+# Build artifacts
+chop
+chop-*
+*.wasm
+
+# Go
+vendor/
+dist/
+coverage.txt
+*.coverprofile
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

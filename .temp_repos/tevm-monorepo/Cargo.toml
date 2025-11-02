@@ -1,0 +1,12 @@
+
+[workspace]
+resolver = '2'
+members = [
+	'bundler-packages/resolutions-rs',
+	'bundler-packages/runtime-rs',
+	'bundler-packages/solc-rs',
+]
+
+[profile.release]
+lto = true
+panic = "abort"

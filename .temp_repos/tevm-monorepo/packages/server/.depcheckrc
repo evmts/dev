@@ -1,0 +1,7 @@
+ignores: [
+  "@tevm/jsonrpc",
+  "next",
+  "express",
+  "@types/express"
+]
+skip-missing: true

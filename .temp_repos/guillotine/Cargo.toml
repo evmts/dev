@@ -1,0 +1,32 @@
+[workspace]
+resolver = "2"
+members = ["lib/foundry-compilers", "lib/ark"]
+exclude = ["bench/evm-bench", "benchmarks"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+[workspace.dependencies]
+alloy-primitives = "0.8"
+# Arkworks dependencies for elliptic curve operations
+ark-bn254 = "0.5.0"
+ark-ec = "0.5.0"
+ark-ff = "0.5.0"
+ark-serialize = "0.5.0"
+ark-bls12-381 = "0.5.0"
+
+[profile.release]
+# Optimize for size by default (smallest flag)
+opt-level = "z"
+lto = false  # Disabled for faster compilation
+# codegen-units = 1  # Allow multiple units for parallel compilation
+panic = "abort"
+
+[profile.release-fast]
+# Optimize for speed when fastest flag is used
+inherits = "release"
+opt-level = 3
+lto = false  # Disabled for faster compilation
+# codegen-units = 1  # Allow multiple units for parallel compilation
+panic = "abort"

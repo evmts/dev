@@ -1,0 +1,4 @@
+ignores: [
+  "@tevm/node"
+]
+skip-missing: true
